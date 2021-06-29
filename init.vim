@@ -3,6 +3,9 @@ call plug#begin('~/.config/nvim/plugged')
 Plug 'morhetz/gruvbox'
 Plug 'itchyny/lightline.vim'
 Plug 'mengelbrecht/lightline-bufferline'
+Plug 'lambdalisue/nerdfont.vim'
+Plug 'tpope/vim-rhubarb'
+Plug 'tpope/vim-fugitive'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 call plug#end()
@@ -12,10 +15,17 @@ set termguicolors
 set background=dark
 
 """ 配置lightline底部的stateline和顶部的tabline
+let g:lightline#bufferline#unnamed = '[No Name]'
+let g:lightline#bufferline#unicode_symbols = 1
+let g:lightline#bufferline#enable_nerdfont = 1
+let g:lightline#bufferline#show_number = 2
+let g:lightline#bufferline#number_map = {
+\ 0: '⁰', 1: '¹', 2: '²', 3: '³', 4: '⁴',
+\ 5: '⁵', 6: '⁶', 7: '⁷', 8: '⁸', 9: '⁹'}
 let g:lightline = {
       \ 'colorscheme': 'gruvbox',
       \ 'active': {
-      \   'left': [ [ 'mode' ] ],
+      \   'left': [ [ 'mode', 'paste'], [ 'gitbranch', 'filename']]
       \ },
       \ 'component': {
       \   'quote': 'Expecto Patronum',
@@ -27,6 +37,7 @@ let g:lightline = {
       \ },
       \ 'component_expand': {
       \   'buffers': 'lightline#bufferline#buffers',
+      \   'gitbranch': 'FugitiveHead'
       \ },
       \ 'component_type': {
       \   'buffers': 'tabsel'
@@ -45,8 +56,6 @@ syntax on                " 自动语法高亮
 set cursorline           " 高亮显示当前行
 set noshowmode           " 不额外的显示insert等状态
 set cmdheight=1          " 设置命令行的高度
-"filetype on              " 设置开启文件类型侦测
-"filetype plugin on       " 设置加载对应文件类型的插件
 
 """ 代码缩进和排版
 set autoindent           " 设置自动缩进
